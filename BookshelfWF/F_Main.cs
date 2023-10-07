@@ -49,6 +49,7 @@ namespace BookshelfWF
         private void button1_Click(object sender, EventArgs e)
         {
             //DbWork.CreateDB();
+            SharedId.Id = -1;
             F_Add newForm = new F_Add();
             newForm.ShowDialog();
             SetupDataGridView();
@@ -92,6 +93,15 @@ namespace BookshelfWF
             proc.StartInfo.FileName = loadedbook[0].FileName;
             proc.StartInfo.UseShellExecute = true;
             proc.Start();
+        }
+
+        private void BT_Edit_Click(object sender, EventArgs e)
+        {
+            SharedId.Id = Convert.ToInt32(DGV1[0, DGV1.CurrentRow.Index].Value);
+            F_Add newForm = new F_Add();
+            newForm.ShowDialog();
+            SetupDataGridView();
+            SharedId.Id = -1;
         }
     }
 }

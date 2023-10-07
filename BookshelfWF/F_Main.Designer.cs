@@ -160,7 +160,7 @@
             this.BT_Edit.TabIndex = 1;
             this.BT_Edit.Text = "Изменить книгу";
             this.BT_Edit.UseVisualStyleBackColor = true;
-            this.BT_Edit.Click += new System.EventHandler(this.button1_Click);
+            this.BT_Edit.Click += new System.EventHandler(this.BT_Edit_Click);
             // 
             // BT_Del
             // 

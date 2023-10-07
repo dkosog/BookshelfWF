@@ -25,6 +25,8 @@ namespace BookshelfWF
         private void BT_Save_Click(object sender, EventArgs e)
         {
             Book book = new Book { Author = TB_Author.Text, Title = TB_Title.Text, FileName = TB_Filename.Text, FileData=filedata };
+            if (SharedId.Id != -1)
+            { DbWork.DelBook(SharedId.Id); }
             DbWork.AddBook(book);
             this.Close();
         }
@@ -38,7 +40,24 @@ namespace BookshelfWF
 
         private void F_Add_Load(object sender, EventArgs e)
         {
-            BT_File_Delete.Enabled = false;
+            if (SharedId.Id !=-1)
+            {
+                BindingList<Book> loadedbook = new BindingList<Book>(DbWork.GetBook(SharedId.Id));
+                TB_Author.Text = loadedbook[0].Author;
+                TB_Title.Text = loadedbook[0].Title;
+                TB_Filename.Text = loadedbook[0].FileName;
+                filedata = loadedbook[0].FileData;
+                BT_File_Delete.Enabled = false;
+                BT_Save.Text = "Сохранить изменения";
+                this.Text = "Редактирование книги";
+            }
+            else
+            {
+                BT_File_Delete.Enabled = false;
+                BT_Save.Text = "Добавить книгу";
+                this.Text = "Добавление книги";
+            }
+            
         }
 
         private void BT_Cancel_Click(object sender, EventArgs e)
@@ -63,7 +82,7 @@ namespace BookshelfWF
             {
                 BT_File_Delete.Enabled = true;
             }
-            // читаем файл в строку
+            
            
         }
     }

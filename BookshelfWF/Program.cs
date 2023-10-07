@@ -8,6 +8,7 @@ namespace BookshelfWF
 {
     internal static class Program
     {
+       
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
@@ -18,5 +19,9 @@ namespace BookshelfWF
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new F_Main());
         }
+    }
+    static class SharedId
+    {
+        public static int Id { get; set; }
     }
 }
