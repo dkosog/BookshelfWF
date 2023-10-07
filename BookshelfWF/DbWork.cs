@@ -56,7 +56,7 @@ namespace BookshelfWF
                 using (SQLiteConnection con = new SQLiteConnection(string.Format(pathDB)))
                 {
                     con.Open();
-                    SQLiteCommand cmd = new SQLiteCommand(@"SELECT Id, Author, Title, FileName FROM TB_BOOKS;", con);
+                    SQLiteCommand cmd = new SQLiteCommand(@"SELECT Id, Author, Title, FileName FROM TB_BOOKS order by Author;", con);
                     
                         using (var rdr = cmd.ExecuteReader())
                         {
@@ -163,38 +163,7 @@ namespace BookshelfWF
                     }
         }
 
-        ////internal static void AddBooks(string author, string title, string filename, byte[] filedata)
-        //internal static void AddBooks(Book book)
-        //{
-        //    //if (!File.Exists(pathDB)) 
-        //    //{
-        //    //CreateDB();
-        //    //}
-        //    try
-        //    {
-        //        List<Book> books = new List<Book>();
-        //        using (SQLiteConnection con = new SQLiteConnection(string.Format($"Data source={pathDB};")))
-        //        {
-        //            con.Open();
-        //            SQLiteCommand cmd = new SQLiteCommand();
-        //            cmd.Connection = con;
-        //            cmd.CommandText = @"INSERT INTO TB_BOOKS (Author, Title, FileName)
-        //                                            VALUES (@Author, @Title, @FileName)";
-        //            cmd.Parameters.Add(new SQLiteParameter("@Author", book.Author));
-        //            cmd.Parameters.Add(new SQLiteParameter("@Title", book.Title));
-        //            cmd.Parameters.Add(new SQLiteParameter("@FileName", book.FileName));
-        //            //cmd.Parameters.Add(new SQLiteParameter("@FileData", book.FileData));
-        //            int number = cmd.ExecuteNonQuery();
-        //            MessageBox.Show("Добавлено записей: " + number.ToString());
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //        return;
-        //    }
-        //}
-
+        
         internal static void DelBook(int id)
         {
             //if (!File.Exists(pathDB)) 
