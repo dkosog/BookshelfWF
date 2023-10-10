@@ -53,6 +53,7 @@
             // 
             // TB_Author
             // 
+            this.TB_Author.Font = new System.Drawing.Font("Segoe UI Emoji", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.TB_Author.Location = new System.Drawing.Point(20, 48);
             this.TB_Author.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.TB_Author.Name = "TB_Author";

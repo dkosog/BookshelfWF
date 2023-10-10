@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.ComponentModel;
+using System.Data;
 
 namespace BookshelfWF
 {
@@ -43,13 +44,13 @@ namespace BookshelfWF
                  }
         }
 
-        internal static BindingList<Book> GetBooks()
+        internal static DataTable GetBooks()
         {
             //if (!File.Exists(pathDB)) 
             //{
             //CreateDB();
             //}
-            BindingList<Book> books = new BindingList<Book>();
+            DataTable books = new DataTable();
             try
             {
                 
@@ -57,24 +58,26 @@ namespace BookshelfWF
                 {
                     con.Open();
                     SQLiteCommand cmd = new SQLiteCommand(@"SELECT Id, Author, Title, FileName FROM TB_BOOKS order by Author;", con);
-                    
-                        using (var rdr = cmd.ExecuteReader())
-                        {
+                    SQLiteDataAdapter da = new SQLiteDataAdapter(cmd);
+                    da.Fill(books);
+                    return books;
+                        //using (var rdr = cmd.ExecuteReader())
+                        //{
 
-                            while (rdr.Read())
-                            {
-                                var id = rdr.GetInt32(0);
-                                var author = rdr.GetString(1);
-                                var title = rdr.GetString(2);
-                                var filename = rdr.GetString(3);
-                                //var filedata = (byte[])rdr.GetValue(4);
+                        //    while (rdr.Read())
+                        //    {
+                        //        var id = rdr.GetInt32(0);
+                        //        var author = rdr.GetString(1);
+                        //        var title = rdr.GetString(2);
+                        //        var filename = rdr.GetString(3);
+                        //        //var filedata = (byte[])rdr.GetValue(4);
 
-                                Book bk = new Book { Id = id, Author = author, Title = title, FileName = filename};
-                                books.Add(bk);
+                        //        Book bk = new Book { Id = id, Author = author, Title = title, FileName = filename};
+                        //        books.Add(bk);
 
-                            }
-                            return books;
-                        }
+                        //    }
+                        //    return books;
+                        //}
                     
 
                 }
@@ -86,25 +89,23 @@ namespace BookshelfWF
                     }
                 }
 
-        internal static BindingList<Book> GetBook(int SelectedId)
+        internal static List<Book> GetBook(int SelectedId)
         {
             //if (!File.Exists(pathDB)) 
             //{
             //CreateDB();
             //}
-            BindingList<Book> books = new BindingList<Book>();
+            List<Book> books = new List<Book>();
             try
             {
 
                 using (SQLiteConnection con = new SQLiteConnection(string.Format(pathDB)))
                 {
                     con.Open();
-                    //string query = "SELECT * FROM TB_BOOKS WHERE ID=7"; //WHERE Id = " + SelectedId;
                     SQLiteCommand cmd = new SQLiteCommand();
                     cmd.Connection = con;
                     cmd.CommandText = @"SELECT * FROM TB_BOOKS WHERE ID=@SelectedId";
                     cmd.Parameters.Add(new SQLiteParameter("@SelectedId", SelectedId));
-                    //cmd.ExecuteNonQuery();
                     using (var rdr = cmd.ExecuteReader())
                     {
                         while (rdr.Read())
@@ -134,7 +135,7 @@ namespace BookshelfWF
 
         internal static void AddBook(Book book)
         {
-            BindingList<Book> books = new BindingList<Book>();
+            List<Book> books = new List<Book>();
             if (book.FileName == null || book.FileName=="") 
             { 
                 book.FileName = "none"; 

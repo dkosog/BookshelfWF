@@ -42,7 +42,7 @@ namespace BookshelfWF
         {
             if (SharedId.Id !=-1)
             {
-                BindingList<Book> loadedbook = new BindingList<Book>(DbWork.GetBook(SharedId.Id));
+                List<Book> loadedbook = new List<Book>(DbWork.GetBook(SharedId.Id));
                 TB_Author.Text = loadedbook[0].Author;
                 TB_Title.Text = loadedbook[0].Title;
                 TB_Filename.Text = loadedbook[0].FileName;
