@@ -24,7 +24,9 @@ namespace BookshelfWF
 
         private void BT_Save_Click(object sender, EventArgs e)
         {
-            Book book = new Book { Author = TB_Author.Text, Title = TB_Title.Text, FileName = TB_Filename.Text, FileData=filedata };
+            Book book = new Book 
+            { Author = TB_Author.Text, Title = TB_Title.Text, Genre=CB_Genre.Text, Year=TB_Year.Text,
+                Raiting=CB_Raiting.Text, Description=TB_Description.Text, FileName = TB_Filename.Text, FileData=filedata };
             if (SharedId.Id != -1)
             { DbWork.DelBook(SharedId.Id); }
             DbWork.AddBook(book);
@@ -45,6 +47,10 @@ namespace BookshelfWF
                 List<Book> loadedbook = new List<Book>(DbWork.GetBook(SharedId.Id));
                 TB_Author.Text = loadedbook[0].Author;
                 TB_Title.Text = loadedbook[0].Title;
+                CB_Genre.Text = loadedbook[0].Genre;
+                TB_Year.Text = loadedbook[0].Year;
+                CB_Raiting.Text = loadedbook[0].Raiting;
+                TB_Description.Text = loadedbook[0].Description;
                 TB_Filename.Text = loadedbook[0].FileName;
                 filedata = loadedbook[0].FileData;
                 BT_File_Delete.Enabled = false;

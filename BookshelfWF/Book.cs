@@ -11,6 +11,10 @@ namespace BookshelfWF
         private int id;
         private string author;
         private string title;
+        private string genre;
+        private string year;
+        private string raiting;
+        private string description;
         private string filename;
         private byte[] filedata;
 
@@ -30,6 +34,30 @@ namespace BookshelfWF
         {
             get { return title; }
             set { title = value; }
+        }
+
+        public string Genre
+        {
+            get { return genre; }
+            set { genre = value; }
+        }
+
+        public string Year
+        {
+            get { return year; }
+            set { year = value; }
+        }
+
+        public string Raiting
+        {
+            get { return raiting; }
+            set { raiting = value; }
+        }
+
+        public string Description
+        {
+            get { return description; }
+            set { description = value; }
         }
 
         public string FileName

@@ -27,27 +27,42 @@ namespace BookshelfWF
             DGV1.AutoGenerateColumns = false;
             DGV1.Columns[0].Visible = false;
             DGV1.Columns[1].HeaderText = "Автор";
-            DGV1.Columns[1].Width = 200;
+            DGV1.Columns[1].Width = 150;
             DGV1.Columns[2].HeaderText = "Название книги";
             DGV1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-
-            DGV1.Columns[3].HeaderText = "Файл книги";
-            DGV1.Columns[3].Width = 200;
-            //DGV1.Columns[4].Visible = false;
+            DGV1.Columns[3].HeaderText = "Жанр";
+            DGV1.Columns[3].Width = 100;
+            DGV1.Columns[4].HeaderText = "Год";
+            DGV1.Columns[4].Width = 40;
+            DGV1.Columns[5].HeaderText = "Оценка";
+            DGV1.Columns[5].Width = 50;
+            DGV1.Columns[6].Visible = false;
+            DGV1.Columns[7].HeaderText = "Файл книги";
+            DGV1.Columns[7].Width = 200;
             DGV1.Columns[1].SortMode = DataGridViewColumnSortMode.Automatic;
             DGV1.Columns[2].SortMode = DataGridViewColumnSortMode.Automatic;
-            DGV1.CurrentCell = DGV1[1, 0];
+            if (DGV1.Rows.Count > 0)
+            { DGV1.CurrentCell = DGV1[1, 0]; }
         }
 
         private void SetupTextBoxes()
         {
             //TB_Author.Text = DGV1[1, Convert.ToInt32(DGV1.CurrentCell.RowIndex.ToString())].Value.ToString();
-            TB_Author.Text = (DGV1[1, DGV1.CurrentRow.Index].Value).ToString();
-            TB_Title.Text = (DGV1[2, DGV1.CurrentRow.Index].Value).ToString();
-            TB_Filename.Text = (DGV1[3, DGV1.CurrentRow.Index].Value).ToString();
-            if ((DGV1[3, DGV1.CurrentRow.Index].Value).ToString() != "none")
+            BT_Open.Enabled = false;
+            if (DGV1.Rows.Count > 0)
+            {
+                TB_Author.Text = (DGV1[1, DGV1.CurrentRow.Index].Value).ToString();
+                TB_Title.Text = (DGV1[2, DGV1.CurrentRow.Index].Value).ToString();
+                TB_Genre.Text = (DGV1[3, DGV1.CurrentRow.Index].Value).ToString();
+                TB_Year.Text = (DGV1[4, DGV1.CurrentRow.Index].Value).ToString();
+                TB_Raiting.Text = (DGV1[5, DGV1.CurrentRow.Index].Value).ToString();
+                TB_Description.Text = (DGV1[6, DGV1.CurrentRow.Index].Value).ToString();
+                TB_Filename.Text = (DGV1[7, DGV1.CurrentRow.Index].Value).ToString();
+            
+            if ((DGV1[7, DGV1.CurrentRow.Index].Value).ToString() != "none")
             { BT_Open.Enabled = true; }
             else { BT_Open.Enabled = false; }
+            }
         }
 
         private void BT_Add_Click(object sender, EventArgs e)
@@ -61,12 +76,9 @@ namespace BookshelfWF
         }
 
         private void Form1_Load(object sender, EventArgs e)
-        {
-            
+        {            
             SetupDataGridView();
             SetupTextBoxes();
-
-
         }
 
         private void DGV1_Click(object sender, EventArgs e)
@@ -109,19 +121,32 @@ namespace BookshelfWF
         }
 
        
-        private void button1_Click(object sender, EventArgs e)
+        private void BT_Filter_Click(object sender, EventArgs e)
         {
             if(CB_WFile.Checked)
-            { 
-                (DGV1.DataSource as DataTable).DefaultView.RowFilter = $"Author like '{TB_Filter_Author.Text}%' " +
-                    $"and Title like '{TB_Filter_Title.Text}%' and FileName <>'none'"; 
+            {
+                (DGV1.DataSource as DataTable).DefaultView.RowFilter = $"Author like '{TB_Filter_Author.Text}%'" +
+                    $" and Title like '{TB_Filter_Title.Text}%' and Genre like '{CB_Genre_Filter.Text}%'" +
+                    $"and Year like '{TB_Year_Filter.Text}%' and Raiting = '{CB_Raiting_Filter.Text}' and FileName <>'none'"; 
             }
             else
             {
                 (DGV1.DataSource as DataTable).DefaultView.RowFilter = $"Author like '{TB_Filter_Author.Text}%'" +
-                    $" and Title like '{TB_Filter_Title.Text}%'";
+                    $" and Title like '{TB_Filter_Title.Text}%' and Genre like '{CB_Genre_Filter.Text}%'" +
+                    $"and Year like '{TB_Year_Filter.Text}%' and Raiting = '{CB_Raiting_Filter.Text}'";
             }
             
+        }
+
+        private void BT_Clear_Click(object sender, EventArgs e)
+        {
+            TB_Filter_Author.Text = null;
+            TB_Filter_Title.Text = null;
+            TB_Year_Filter.Text = null;
+            CB_Genre_Filter.Text = null;
+            CB_Raiting_Filter.Text = null;
+            CB_WFile.Checked = false;
+            (DGV1.DataSource as DataTable).DefaultView.RowFilter = null;
         }
     }
 }

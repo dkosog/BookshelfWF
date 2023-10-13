@@ -23,8 +23,8 @@ namespace BookshelfWF
                         con.Open();
                         SQLiteCommand cmd = new SQLiteCommand();
                         cmd.Connection = con;
-                        cmd.CommandText = "CREATE TABLE TB_BOOKS (Id INTEGER NOT NULL UNIQUE, Author TEXT, Title TEXT, " +
-                                           "FileName	TEXT, FileData	BLOB, PRIMARY KEY(Id AUTOINCREMENT));";
+                        cmd.CommandText = "CREATE TABLE TB_BOOKS (Id INTEGER NOT NULL UNIQUE, Author TEXT, Title TEXT, Genre TEXT, Year TEXT, " +
+                                           "Raiting TEXT, Description TEXT, FileName	TEXT, FileData	BLOB, PRIMARY KEY(Id AUTOINCREMENT));";
                         {
                             try
                             {
@@ -57,44 +57,22 @@ namespace BookshelfWF
                 using (SQLiteConnection con = new SQLiteConnection(string.Format(pathDB)))
                 {
                     con.Open();
-                    SQLiteCommand cmd = new SQLiteCommand(@"SELECT Id, Author, Title, FileName FROM TB_BOOKS order by Author;", con);
+                    SQLiteCommand cmd = new SQLiteCommand(@"SELECT Id, Author, Title, Genre, Year, Raiting, Description, FileName FROM TB_BOOKS order by Author;", con);
                     SQLiteDataAdapter da = new SQLiteDataAdapter(cmd);
                     da.Fill(books);
                     return books;
-                        //using (var rdr = cmd.ExecuteReader())
-                        //{
-
-                        //    while (rdr.Read())
-                        //    {
-                        //        var id = rdr.GetInt32(0);
-                        //        var author = rdr.GetString(1);
-                        //        var title = rdr.GetString(2);
-                        //        var filename = rdr.GetString(3);
-                        //        //var filedata = (byte[])rdr.GetValue(4);
-
-                        //        Book bk = new Book { Id = id, Author = author, Title = title, FileName = filename};
-                        //        books.Add(bk);
-
-                        //    }
-                        //    return books;
-                        //}
-                    
-
                 }
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
                 return books;
                     }
                 }
 
         internal static List<Book> GetBook(int SelectedId)
         {
-            //if (!File.Exists(pathDB)) 
-            //{
-            //CreateDB();
-            //}
+            
             List<Book> books = new List<Book>();
             try
             {
@@ -113,10 +91,16 @@ namespace BookshelfWF
                             var id = rdr.GetInt32(0);
                             var author = rdr.GetString(1);
                             var title = rdr.GetString(2);
-                            var filename = rdr.GetString(3);
-                            var filedata = (byte[])rdr.GetValue(4);
+                            var genre = rdr.GetString(3);
+                            var year = rdr.GetString(4);
+                            var raiting = rdr.GetString(5);
+                            var description = rdr.GetString(6);
+                            var filename = rdr.GetString(7);
+                            var filedata = (byte[])rdr.GetValue(8);
 
-                            Book bk = new Book { Id = id, Author = author, Title = title, FileName = filename, FileData=filedata };
+                            Book bk = new Book 
+                            { Id = id, Author = author, Title = title, Genre = genre, Year = year, Raiting = raiting,
+                               Description=description,  FileName = filename, FileData=filedata };
                             books.Add(bk);
 
                         }
@@ -128,7 +112,7 @@ namespace BookshelfWF
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
                 return books;
             }
         }
@@ -147,14 +131,18 @@ namespace BookshelfWF
                     con.Open();
                     SQLiteCommand cmd = new SQLiteCommand();
                     cmd.Connection = con;
-                    cmd.CommandText = @"INSERT INTO TB_BOOKS (Author, Title, FileName, FileData)
-                                                            VALUES (@Author, @Title, @FileName, @FileData)";
-                                cmd.Parameters.Add(new SQLiteParameter("@Author", book.Author));
-                                cmd.Parameters.Add(new SQLiteParameter("@Title", book.Title));
-                                cmd.Parameters.Add(new SQLiteParameter("@FileName", book.FileName));
-                                cmd.Parameters.Add(new SQLiteParameter("@FileData", book.FileData));
-                                int number = cmd.ExecuteNonQuery();
-                                MessageBox.Show("Добавлено записей: " + number.ToString());
+                    cmd.CommandText = @"INSERT INTO TB_BOOKS (Author, Title, Genre, Year, Raiting, Description, FileName, FileData)
+                                                            VALUES (@Author, @Title, @Genre, @Year, @Raiting, @Description, @FileName, @FileData)";
+                    cmd.Parameters.Add(new SQLiteParameter("@Author", book.Author));
+                    cmd.Parameters.Add(new SQLiteParameter("@Title", book.Title));
+                    cmd.Parameters.Add(new SQLiteParameter("@Genre", book.Genre));
+                    cmd.Parameters.Add(new SQLiteParameter("@Year", book.Year));
+                    cmd.Parameters.Add(new SQLiteParameter("@Raiting", book.Raiting));
+                    cmd.Parameters.Add(new SQLiteParameter("@Description", book.Description));
+                    cmd.Parameters.Add(new SQLiteParameter("@FileName", book.FileName));
+                    cmd.Parameters.Add(new SQLiteParameter("@FileData", book.FileData));
+                    int number = cmd.ExecuteNonQuery();
+                    MessageBox.Show("Добавлено записей: " + number.ToString());
                 }
             }
                     catch (Exception ex)
