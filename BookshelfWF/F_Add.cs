@@ -11,6 +11,9 @@ using System.Windows.Forms;
 
 namespace BookshelfWF
 {
+    /// <summary>
+    /// Форма добавления/редактирования книги.
+    /// </summary>
     public partial class F_Add : Form
     {
         private byte[] filedata;
@@ -22,6 +25,11 @@ namespace BookshelfWF
 
         }
 
+        /// <summary>
+        /// Действие по кнопке Сохранить.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BT_Save_Click(object sender, EventArgs e)
         {
             Book book = new Book 
@@ -33,6 +41,11 @@ namespace BookshelfWF
             this.Close();
         }
 
+        /// <summary>
+        /// Действие по кнопке Удалить файл.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BT_File_Delete_Click(object sender, EventArgs e)
         {
             filedata = null;
@@ -40,6 +53,11 @@ namespace BookshelfWF
             BT_File_Delete.Enabled = false;
         }
 
+        /// <summary>
+        /// Действие по кнопке Сохранить изменения/Добавить книгу в зависимости от вида производимой операции.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void F_Add_Load(object sender, EventArgs e)
         {
             if (SharedId.Id !=-1)
@@ -66,11 +84,21 @@ namespace BookshelfWF
             
         }
 
+        /// <summary>
+        /// Действие по кнопке Отмена.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BT_Cancel_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Действие по кнопке Загрузить файл.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BT_File_Load_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.Cancel)

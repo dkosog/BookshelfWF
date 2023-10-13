@@ -6,16 +6,54 @@ using System.Threading.Tasks;
 
 namespace BookshelfWF
 {
+    /// <summary>
+    /// Описание объектов каталога.
+    /// </summary>
     internal class Book
     {
+        /// <summary>
+        /// Идентификатор для работы с БД.
+        /// </summary>
         private int id;
+        
+        /// <summary>
+        /// Автор книги.
+        /// </summary>
         private string author;
+        
+        /// <summary>
+        /// Название книги.
+        /// </summary>
         private string title;
+        
+        /// <summary>
+        /// Жанр книги.
+        /// </summary>
         private string genre;
+        
+        /// <summary>
+        /// Год издательства книги.
+        /// </summary>
         private string year;
+        
+        /// <summary>
+        /// Рейтинг (оценка) книги. 
+        /// </summary>
         private string raiting;
+        
+        /// <summary>
+        /// Краткая аннотация книги.
+        /// </summary>
         private string description;
+        
+        /// <summary>
+        /// Имя файла книги (при наличии).
+        /// </summary>
         private string filename;
+        
+        /// <summary>
+        /// Содержимое файла книги.
+        /// </summary>
         private byte[] filedata;
 
         public int Id

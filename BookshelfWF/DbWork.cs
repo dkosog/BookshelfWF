@@ -7,14 +7,21 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Data;
+using System.IO;
 
 namespace BookshelfWF
 {
+    /// <summary>
+    /// Работа с базой данных
+    /// </summary>
     internal class DbWork
     {
         //internal static string pathDB = Path.Combine(Application.StartupPath, "dbase.db");
         private static string pathDB = "Data Source=dbase.db";
 
+        /// <summary>
+        /// Создание новой пустой БД.
+        /// </summary>
         internal static void CreateDB()
         {
                  using (var con = new SQLiteConnection("Data Source=dbase.db"))
@@ -44,12 +51,16 @@ namespace BookshelfWF
                  }
         }
 
+        /// <summary>
+        /// Загрузка всех книг из БД.
+        /// </summary>
+        /// <returns>Все книги без содержимого файлов книг.</returns>
         internal static DataTable GetBooks()
         {
-            //if (!File.Exists(pathDB)) 
-            //{
-            //CreateDB();
-            //}
+            if (!File.Exists(pathDB)) 
+            {
+            CreateDB();
+            }
             DataTable books = new DataTable();
             try
             {
@@ -70,6 +81,11 @@ namespace BookshelfWF
                     }
                 }
 
+        /// <summary>
+        /// Загрузка из БД одной записи.
+        /// </summary>
+        /// <param name="SelectedId">Id записи для выгрузки.</param>
+        /// <returns>Одна запись, включая содержимое файла книги.</returns>
         internal static List<Book> GetBook(int SelectedId)
         {
             
@@ -117,6 +133,10 @@ namespace BookshelfWF
             }
         }
 
+        /// <summary>
+        /// Добавление запись в БД.
+        /// </summary>
+        /// <param name="book">Коллекция полей класса Book.</param>
         internal static void AddBook(Book book)
         {
             List<Book> books = new List<Book>();
@@ -152,13 +172,13 @@ namespace BookshelfWF
                     }
         }
 
-        
+        /// <summary>
+        /// Удаление записи из БД.
+        /// </summary>
+        /// <param name="id">Идентификатор записи которая должна бытьудалена</param>
         internal static void DelBook(int id)
         {
-            //if (!File.Exists(pathDB)) 
-            //{
-            //CreateDB();
-            //}
+            
             try
             {
                 using (SQLiteConnection con = new SQLiteConnection(string.Format(pathDB)))

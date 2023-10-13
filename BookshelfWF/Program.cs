@@ -20,6 +20,9 @@ namespace BookshelfWF
             Application.Run(new F_Main());
         }
     }
+    /// <summary>
+    /// Обмен данными между формами
+    /// </summary>
     static class SharedId
     {
         public static int Id { get; set; }
