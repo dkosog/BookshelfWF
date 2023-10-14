@@ -17,14 +17,14 @@ namespace BookshelfWF
     internal class DbWork
     {
         //internal static string pathDB = Path.Combine(Application.StartupPath, "dbase.db");
-        private static string pathDB = "Data Source=dbase.db";
+        private static string pathDB = "dbase.db";
 
         /// <summary>
         /// Создание новой пустой БД.
         /// </summary>
         internal static void CreateDB()
         {
-                 using (var con = new SQLiteConnection("Data Source=dbase.db"))
+                 using (var con = new SQLiteConnection($"Data Source={pathDB}"))
 
                  {
                         con.Open();
@@ -65,7 +65,7 @@ namespace BookshelfWF
             try
             {
                 
-                using (SQLiteConnection con = new SQLiteConnection(string.Format(pathDB)))
+                using (SQLiteConnection con = new SQLiteConnection(string.Format($"Data Source={pathDB}")))
                 {
                     con.Open();
                     SQLiteCommand cmd = new SQLiteCommand(@"SELECT Id, Author, Title, Genre, Year, Raiting, Description, FileName FROM TB_BOOKS order by Author;", con);
@@ -93,7 +93,7 @@ namespace BookshelfWF
             try
             {
 
-                using (SQLiteConnection con = new SQLiteConnection(string.Format(pathDB)))
+                using (SQLiteConnection con = new SQLiteConnection(string.Format($"Data Source={pathDB}")))
                 {
                     con.Open();
                     SQLiteCommand cmd = new SQLiteCommand();
@@ -146,7 +146,7 @@ namespace BookshelfWF
             }
             try
             {
-                using (SQLiteConnection con = new SQLiteConnection(string.Format(pathDB)))
+                using (SQLiteConnection con = new SQLiteConnection(string.Format($"Data Source={pathDB}")))
                 {
                     con.Open();
                     SQLiteCommand cmd = new SQLiteCommand();
@@ -181,7 +181,7 @@ namespace BookshelfWF
             
             try
             {
-                using (SQLiteConnection con = new SQLiteConnection(string.Format(pathDB)))
+                using (SQLiteConnection con = new SQLiteConnection(string.Format($"Data Source={pathDB}")))
                 {
                     con.Open();
                     SQLiteCommand cmd = new SQLiteCommand();

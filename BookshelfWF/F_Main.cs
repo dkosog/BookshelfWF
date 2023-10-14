@@ -35,18 +35,19 @@ namespace BookshelfWF
             DGV1.AutoGenerateColumns = false;
             DGV1.Columns[0].Visible = false;
             DGV1.Columns[1].HeaderText = "Автор";
-            DGV1.Columns[1].Width = 150;
+            DGV1.Columns[1].Width = 70;
             DGV1.Columns[2].HeaderText = "Название книги";
+            DGV1.Columns[1].Width = 250;
             DGV1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             DGV1.Columns[3].HeaderText = "Жанр";
-            DGV1.Columns[3].Width = 100;
+            DGV1.Columns[3].MinimumWidth = 150;
             DGV1.Columns[4].HeaderText = "Год";
-            DGV1.Columns[4].Width = 40;
+            DGV1.Columns[4].MinimumWidth = 30;
             DGV1.Columns[5].HeaderText = "Оценка";
-            DGV1.Columns[5].Width = 50;
+            DGV1.Columns[5].MinimumWidth = 120;
             DGV1.Columns[6].Visible = false;
             DGV1.Columns[7].HeaderText = "Файл книги";
-            DGV1.Columns[7].Width = 200;
+            DGV1.Columns[7].MinimumWidth = 150;
             DGV1.Columns[1].SortMode = DataGridViewColumnSortMode.Automatic;
             
             if (DGV1.Rows.Count > 0)
@@ -163,17 +164,20 @@ namespace BookshelfWF
         /// <param name="e"></param>
         private void BT_Filter_Click(object sender, EventArgs e)
         {
-            if(CB_WFile.Checked) //Фильтрация DGV1. 
+            string sGenre = "%";
+            if (CB_Raiting_Filter.Text != "")
+            { sGenre = CB_Raiting_Filter.Text; }
+            if (CB_WFile.Checked) //Фильтрация DGV1. 
             {
                 (DGV1.DataSource as DataTable).DefaultView.RowFilter = $"Author like '{TB_Filter_Author.Text}%'" +
                     $" and Title like '{TB_Filter_Title.Text}%' and Genre like '{CB_Genre_Filter.Text}%'" +
-                    $"and Year like '{TB_Year_Filter.Text}%' and Raiting = '{CB_Raiting_Filter.Text}' and FileName <>'none'"; 
+                    $" and Year like '{TB_Year_Filter.Text}%' and Raiting like '{CB_Raiting_Filter.Text}' and FileName <>'none'"; 
             }
             else
             {
                 (DGV1.DataSource as DataTable).DefaultView.RowFilter = $"Author like '{TB_Filter_Author.Text}%'" +
                     $" and Title like '{TB_Filter_Title.Text}%' and Genre like '{CB_Genre_Filter.Text}%'" +
-                    $"and Year like '{TB_Year_Filter.Text}%' and Raiting = '{CB_Raiting_Filter.Text}'";
+                    $" and Year like '{TB_Year_Filter.Text}%' and Raiting like '{sGenre}'";
             }
             
         }

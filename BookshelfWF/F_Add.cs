@@ -71,7 +71,10 @@ namespace BookshelfWF
                 TB_Description.Text = loadedbook[0].Description;
                 TB_Filename.Text = loadedbook[0].FileName;
                 filedata = loadedbook[0].FileData;
-                BT_File_Delete.Enabled = false;
+                if (loadedbook[0].FileName != null || loadedbook[0].FileName !="")
+                {
+                    BT_File_Delete.Enabled = true;
+                }
                 BT_Save.Text = "Сохранить изменения";
                 this.Text = "Редактирование книги";
             }
